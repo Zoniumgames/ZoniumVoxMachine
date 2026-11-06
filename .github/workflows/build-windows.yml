@@ -1,0 +1,19 @@
+name: Build Windows VST3
+on:
+  workflow_dispatch:
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -A x64
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Upload VST3 + Standalone
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZoniumVoxMachine-Windows-x64
+          path: |
+            build/VoxMachine_artefacts/Release/VST3
+            build/VoxMachine_artefacts/Release/Standalone
